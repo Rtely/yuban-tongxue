@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>语伴同学 - 英文课本同步口语陪练</title>
+<meta name="description" content="语伴同学：面向小学生的英文课本同步口语陪练桌面应用。免按键对话、5 套主流教材同步、多角色AI、发音评分，支持 Windows 10 及以上系统下载。">
+<link rel="icon" type="image/png" href="assets/logo.png">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap">
+<style>
+:root{
+  --green:#58cc02; --green-dark:#46a302; --green-pale:#d7ffb8;
+  --bg:#fffbf2; --bg-2:#f6f3ea; --ink:#3c3c3c; --ink-soft:#8a8a6f;
+  --accent:#ff9600; --accent-dark:#d97b00; --card:#fff; --line:#e5e0d2;
+  --blue:#1a8fd6; --purple:#6c5ce7; --pink:#e86d8a; --radius:16px;
+  --shadow:0 4px 0 rgba(0,0,0,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Noto Sans SC",system-ui,-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.container{max-width:1080px;margin:0 auto;padding:0 22px}
+section{padding:72px 0}
+.sec-tag{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--green-dark);background:var(--green-pale);padding:5px 14px;border-radius:999px;letter-spacing:.5px}
+h2{font-size:34px;font-weight:900;line-height:1.25;margin:16px 0 10px}
+.sec-sub{color:var(--ink-soft);font-size:16px;max-width:640px}
+.center{text-align:center}
+.center .sec-sub{margin:0 auto}
+/* ===== 导航 ===== */
+.nav{position:sticky;top:0;z-index:50;background:rgba(255,251,242,.92);backdrop-filter:blur(8px);border-bottom:2px solid var(--line)}
+.nav-in{display:flex;align-items:center;gap:18px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:18px}
+.brand img{width:36px;height:36px;border-radius:9px}
+.brand small{display:block;font-size:11px;font-weight:500;color:var(--ink-soft)}
+.nav-links{display:flex;gap:22px;margin-left:auto;font-size:14.5px;font-weight:600;color:var(--ink)}
+.nav-links a{opacity:.82;transition:opacity .15s}
+.nav-links a:hover{opacity:1;color:var(--green-dark)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;font-weight:700;border:none;cursor:pointer;transition:transform .1s,box-shadow .1s,background .15s;border-radius:12px}
+.btn:active{transform:translateY(2px)}
+.btn-green{background:var(--green);color:#fff;box-shadow:0 3px 0 var(--green-dark);padding:11px 22px;font-size:15px}
+.btn-green:hover{background:#62d90b}
+.btn-orange{background:var(--accent);color:#fff;box-shadow:0 3px 0 var(--accent-dark);padding:11px 22px;font-size:15px}
+.btn-orange:hover{background:#ffa726}
+.btn-ghost{background:var(--card);color:var(--ink);border:2px solid var(--line);box-shadow:0 3px 0 var(--line);padding:10px 20px;font-size:14.5px}
+.btn-ghost:hover{border-color:var(--green)}
+.nav .btn{padding:9px 18px;font-size:14px}
+/* ===== Hero ===== */
+.hero{padding:84px 0 64px;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:center}
+.hero h1{font-size:46px;font-weight:900;line-height:1.2;letter-spacing:-.5px}
+.hero h1 em{font-style:normal;color:var(--green-dark)}
+.hero .lead{margin:18px 0 10px;font-size:17.5px;color:var(--ink-soft)}
+.hero .points{display:flex;flex-wrap:wrap;gap:10px 18px;margin:18px 0 26px;font-size:14.5px;font-weight:600}
+.hero .points li{list-style:none;display:flex;align-items:center;gap:7px;color:var(--ink)}
+.hero .points svg{flex:none;color:var(--green-dark)}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+.hero-meta{margin-top:16px;font-size:12.5px;color:var(--ink-soft)}
+.hero-visual{position:relative}
+.hero-shot{border-radius:20px;border:3px solid var(--card);box-shadow:0 14px 40px rgba(0,0,0,.14);background:var(--card);overflow:hidden}
+.hero-float{position:absolute;left:-18px;bottom:-20px;background:var(--card);border:2px solid var(--line);border-radius:14px;padding:12px 16px;display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:700;box-shadow:var(--shadow)}
+.hero-float .dot{width:10px;height:10px;border-radius:50%;background:var(--green);animation:pulse 1.4s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+/* ===== 功能卡片 ===== */
+.features{background:var(--bg-2);border-top:2px solid var(--line);border-bottom:2px solid var(--line)}
+.feat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:38px}
+.feat{background:var(--card);border:2px solid var(--line);border-radius:var(--radius);padding:22px 18px;box-shadow:var(--shadow)}
+.feat-icon{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;margin-bottom:14px;color:#fff}
+.feat h3{font-size:16.5px;font-weight:800;margin-bottom:7px}
+.feat p{font-size:13.5px;color:var(--ink-soft)}
+.i-green{background:var(--green)} .i-orange{background:var(--accent)} .i-blue{background:var(--blue)} .i-purple{background:var(--purple)}
+/* ===== 角色 ===== */
+.roles{background:var(--bg)}
+.role-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:38px}
+.role{background:var(--card);border:2px solid var(--line);border-radius:var(--radius);padding:24px 18px;text-align:center;box-shadow:var(--shadow)}
+.role-face{width:64px;height:64px;border-radius:50%;margin:0 auto 14px;display:grid;place-items:center;color:#fff;font-size:26px;font-weight:900}
+.role h3{font-size:16px;font-weight:800}
+.role .nick{font-size:12.5px;font-weight:700;margin:2px 0 8px}
+.role p{font-size:13px;color:var(--ink-soft)}
+.f-lily{background:var(--purple)} .f-rose{background:var(--pink)} .f-bobby{background:var(--accent)} .f-coach{background:var(--blue)}
+/* ===== 界面展示 ===== */
+.appshow{background:var(--bg-2);border-top:2px solid var(--line);border-bottom:2px solid var(--line)}
+.app-frame{max-width:920px;margin:38px auto 0;border-radius:22px;border:4px solid #33323a;background:#fff;overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.18)}
+.app-bar{display:flex;gap:7px;padding:12px 16px;background:#faf6ed;border-bottom:2px solid var(--line)}
+.app-bar i{width:12px;height:12px;border-radius:50%}
+.app-bar .r{background:#ff5f57}.app-bar .y{background:#febc2e}.app-bar .g{background:#28c840}
+.app-bar span{flex:1;text-align:center;font-size:12.5px;font-weight:600;color:var(--ink-soft)}
+.app-frame img{width:100%;height:auto}
+.app-caption{text-align:center;margin-top:18px;font-size:14px;color:var(--ink-soft)}
+.app-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:14px}
+.app-tags span{font-size:12.5px;font-weight:600;color:var(--green-dark);background:var(--green-pale);padding:5px 13px;border-radius:999px}
+.shot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:38px}
+.shot-card{background:var(--card);border:2px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);text-align:left}
+.shot-card img{width:100%;height:auto;display:block}
+.shot-card .cap{padding:14px 16px;border-top:2px solid var(--line)}
+.shot-card .cap b{display:block;font-size:15px;font-weight:800;color:var(--ink);margin-bottom:4px}
+.shot-card .cap p{font-size:13px;color:var(--ink-soft);line-height:1.55}
+/* ===== 课本覆盖 ===== */
+.tb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:16px;margin-top:38px}
+.tb{background:var(--card);border:2px solid var(--line);border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.tb .grade{font-size:14px;font-weight:800;color:var(--green-dark);margin-bottom:4px}
+.tb .pub{font-size:12px;color:var(--ink-soft);font-weight:600;margin:0 0 10px;line-height:1.45}
+.tb ul{list-style:none}
+.tb li{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;color:var(--ink);padding:4px 0}
+.tb li svg{flex:none;color:var(--green)}
+.tb-note{margin-top:18px;text-align:center;font-size:14px;color:var(--ink-soft)}
+/* ===== 下载 ===== */
+.download{background:var(--bg)}
+.dl-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:38px}
+.dl-card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:26px 24px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:6px}
+.dl-card .kind{font-size:13px;font-weight:800;color:var(--ink-soft);letter-spacing:1px}
+.dl-card h3{font-size:21px;font-weight:900}
+.dl-card .desc{font-size:13.5px;color:var(--ink-soft);min-height:44px}
+.dl-card .ver{font-size:13px;font-weight:700;color:var(--green-dark);background:var(--green-pale);align-self:flex-start;padding:3px 10px;border-radius:999px}
+.dl-card .size{font-size:12.5px;color:var(--ink-soft)}
+.dl-card .btn{margin-top:14px;width:100%}
+.dl-alt{margin-top:14px;text-align:center;font-size:13.5px;color:var(--ink-soft)}
+.dl-alt a{color:var(--blue);font-weight:700;border-bottom:1px dashed}
+/* ===== 系统要求 ===== */
+.specs{background:var(--bg-2);border-top:2px solid var(--line);border-bottom:2px solid var(--line)}
+.spec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:38px}
+.spec{background:var(--card);border:2px solid var(--line);border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.spec h4{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:800;margin-bottom:8px;color:var(--ink)}
+.spec h4 svg{color:var(--green-dark);flex:none}
+.spec p{font-size:13.5px;color:var(--ink-soft)}
+.spec b{color:var(--ink)}
+/* ===== FAQ ===== */
+.faq{background:var(--bg)}
+.faq-list{max-width:780px;margin:38px auto 0}
+.faq-item{border:2px solid var(--line);border-radius:14px;background:var(--card);margin-bottom:12px;overflow:hidden}
+.faq-q{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;font-family:inherit;font-size:15px;font-weight:700;color:var(--ink);background:none;border:none;cursor:pointer;text-align:left}
+.faq-q svg{flex:none;transition:transform .2s;color:var(--ink-soft)}
+.faq-item.open .faq-q svg{transform:rotate(45deg)}
+.faq-a{display:none;padding:0 20px 18px;font-size:14px;color:var(--ink-soft)}
+.faq-item.open .faq-a{display:block}
+/* ===== 页脚 ===== */
+footer{background:#3c3c3c;color:#cfcbb8;padding:44px 0 34px}
+.foot-in{display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between}
+.foot-brand{display:flex;align-items:center;gap:10px;font-weight:800;color:#fff;font-size:16px}
+.foot-brand img{width:32px;height:32px;border-radius:8px}
+.foot-note{font-size:12.5px;color:#a8a48f;max-width:560px;line-height:1.7}
+.foot-mail a{color:var(--green-pale);font-weight:700}
+/* ===== 响应式 ===== */
+@media (max-width:960px){
+  .feat-grid,.role-grid,.tb-grid{grid-template-columns:repeat(2,1fr)}
+  .spec-grid{grid-template-columns:1fr 1fr}
+  .shot-grid{grid-template-columns:1fr}
+  .hero-grid{grid-template-columns:1fr;gap:34px}
+  .hero h1{font-size:36px}
+  .hero{padding:56px 0 70px}
+  .hero-float{left:8px;bottom:-18px}
+}
+@media (max-width:640px){
+  .nav-links{display:none}
+  section{padding:52px 0}
+  h2{font-size:27px}
+  .feat-grid,.role-grid,.tb-grid,.spec-grid,.dl-grid{grid-template-columns:1fr}
+  .hero h1{font-size:30px}
+  .hero-btns .btn{flex:1}
+  .hero-float{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== 导航 ===== -->
+<header class="nav">
+  <div class="container nav-in">
+    <a class="brand" href="#hero">
+      <img src="assets/logo.png" alt="语伴同学图标">
+      <span>语伴同学<small>英文课本同步口语陪练</small></span>
+    </a>
+    <nav class="nav-links">
+      <a href="#features">功能</a>
+      <a href="#roles">AI角色</a>
+      <a href="#app">界面</a>
+      <a href="#textbooks">课本</a>
+      <a href="#download">下载</a>
+      <a href="#faq">常见问题</a>
+    </nav>
+    <a class="btn btn-green" href="#download">免费下载</a>
+  </div>
+</header>
+
+<!-- ===== Hero ===== -->
+<section class="hero" id="hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="sec-tag">Windows 桌面版 · v1.1.1 在线验证版</span>
+      <h1>让孩子开口说英语，<em>像聊天一样自然</em></h1>
+      <p class="lead">语伴同学是一款面向小学生的英文课本口语陪练应用。孩子说完自动停，AI 自动接话——全程免按键，跟着人教版课本练口语。</p>
+      <ul class="points">
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>免按键直接对话</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>5 种主流教材同步</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>4 种 AI 角色随时切换</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>发音评分，跟读打分</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>中英混合也能聊，每句带翻译</li>
+      </ul>
+      <div class="hero-btns">
+        <a class="btn btn-green" href="#download">下载 v1.1.1</a>
+        <a class="btn btn-ghost" href="#app">查看界面</a>
+      </div>
+      <p class="hero-meta">支持 Windows 10 及以上 · 便携版约 67MB · 需联网和麦克风</p>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-shot">
+        <img src="assets/shot-mixed.png" alt="语伴同学中英文自由对话截图">
+      </div>
+      <div class="hero-float"><span class="dot"></span>正在聆听，孩子请开口…</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 功能 ===== -->
+<section class="features" id="features">
+  <div class="container center">
+    <span class="sec-tag">核心功能</span>
+    <h2>专为孩子设计的口语陪练</h2>
+    <p class="sec-sub">从开口到纠错，一套流程闭环完成，家长只需设置一次 API Key。</p>
+    <div class="feat-grid">
+      <div class="feat">
+        <div class="feat-icon i-green"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg></div>
+        <h3>免按键对话</h3>
+        <p>自研静音检测，孩子说完自动停顿识别，AI 自动回复，全程无需点任何按钮。</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon i-orange"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+        <h3>课本同步</h3>
+        <p>内置人教版PEP、外研社、译林、沪教、北师大 5 套教材，词汇句型严格按课本，设置里随时切换。</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon i-blue"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <h3>口语容错</h3>
+        <p>孩子说慢、说错、中途停顿，AI 也能结合上下文理解并回应，不打击开口积极性。</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon i-purple"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <h3>发音评分</h3>
+        <p>孩子朗读课本句子，讯飞 ISE 从准确度、流利度、完整度三个维度打分并给出鼓励语。</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon i-green"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2l4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg></div>
+        <h3>流式输出</h3>
+        <p>AI 回复边生成边逐字显示，告别长时间等待，对话节奏更接近真人聊天。</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon i-orange"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><line x1="2" y1="9" x2="22" y2="9"/></svg></div>
+        <h3>多模型接入</h3>
+        <p>兼容 OpenAI 格式，DeepSeek、智谱GLM、通义千问、豆包、硅基流动等主流模型一键切换。</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon i-blue"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></div>
+        <h3>双语音引擎</h3>
+        <p>系统 SAPI 离线语音 + Edge 在线高音质语音，没装语音包也能一键切换在线引擎。</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon i-purple"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h3>配置本地化</h3>
+        <p>API Key 等配置只存在软件根目录，不写系统盘，不上传任何数据，保护隐私。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== AI角色 ===== -->
+<section class="roles" id="roles">
+  <div class="container center">
+    <span class="sec-tag">AI 角色</span>
+    <h2>四种语伴，换着花样练</h2>
+    <p class="sec-sub">左侧栏一键切换，角色改变即时影响 AI 的说话风格，让孩子保持新鲜感。</p>
+    <div class="role-grid">
+      <div class="role">
+        <div class="role-face f-lily">L</div>
+        <h3>Lily 拽姐</h3>
+        <p class="nick" style="color:var(--purple)">默认角色</p>
+        <p>冷淡但友好的酷姐，话不多，偶尔来点小幽默，是 v1.0 的经典风格。</p>
+      </div>
+      <div class="role">
+        <div class="role-face f-rose">R</div>
+        <h3>Rose 温柔老师</h3>
+        <p class="nick" style="color:var(--pink)">耐心鼓励型</p>
+        <p>温柔耐心的英语老师，多鼓励孩子，纠错语气温和，适合胆小的孩子。</p>
+      </div>
+      <div class="role">
+        <div class="role-face f-bobby">B</div>
+        <h3>Bobby 搞笑伙伴</h3>
+        <p class="nick" style="color:var(--accent-dark)">轻松幽默型</p>
+        <p>活泼搞笑、爱开玩笑，让孩子放松大胆开口，把练习变成游戏。</p>
+      </div>
+      <div class="role">
+        <div class="role-face f-coach">C</div>
+        <h3>Coach 严格教练</h3>
+        <p class="nick" style="color:var(--blue)">严谨纠错型</p>
+        <p>严谨认真，注重发音和语法准确性，纠错更细致，适合进阶巩固。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 界面展示 ===== -->
+<section class="appshow" id="app">
+  <div class="container center">
+    <span class="sec-tag">界面预览</span>
+    <h2>三种典型场景，实拍界面</h2>
+    <p class="sec-sub">状态提示、流式输出、中英文自由对话——孩子和家长实际使用时的真实画面。</p>
+    <div class="shot-grid">
+      <div class="shot-card">
+        <img src="assets/shot-tip.png" alt="黄色提示框截图">
+        <div class="cap"><b>清晰的状态提示</b><p>语音、教材等关键状态即时提醒，黄色横幅一眼看懂，家长不用摸索。</p></div>
+      </div>
+      <div class="shot-card">
+        <img src="assets/shot-stream.png" alt="AI边思考边输出截图">
+        <div class="cap"><b>AI 边思考边输出</b><p>回复逐字显示，等待感更低，对话节奏更接近真人聊天。</p></div>
+      </div>
+      <div class="shot-card">
+        <img src="assets/shot-mixed.png" alt="中英文对话截图">
+        <div class="cap"><b>不会英文也能开口</b><p>中文、中英混合提问都可以，AI 用英文回复并附中文翻译。</p></div>
+      </div>
+    </div>
+    <div class="app-tags">
+      <span>课小抄：当前单元词汇句型</span>
+      <span>快捷短语：不会说也能点</span>
+      <span>暂停 / 继续：家长随时介入</span>
+      <span>每句英文都带中文翻译</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 课本覆盖 ===== -->
+<section class="textbooks" id="textbooks">
+  <div class="container center">
+    <span class="sec-tag">课本同步</span>
+    <h2>5 套主流教材，一套软件全覆盖</h2>
+    <p class="sec-sub">人教版PEP、外研社、译林、沪教、北师大，从三年级到六年级，词汇、重点句型、开场白、快捷短语全部内置，跟着学校进度练。</p>
+    <div class="tb-grid">
+      <div class="tb">
+        <div class="grade">人教版 PEP</div>
+        <p class="pub">人民教育出版社</p>
+        <ul>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>46 个单元</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>三至六年级</li>
+        </ul>
+      </div>
+      <div class="tb">
+        <div class="grade">外研社版</div>
+        <p class="pub">外语教学与研究出版社</p>
+        <ul>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>48 个单元</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>三至六年级</li>
+        </ul>
+      </div>
+      <div class="tb">
+        <div class="grade">译林版</div>
+        <p class="pub">译林出版社</p>
+        <ul>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>72 个单元</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>三至六年级</li>
+        </ul>
+      </div>
+      <div class="tb">
+        <div class="grade">沪教版</div>
+        <p class="pub">上海教育出版社</p>
+        <ul>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>72 个单元</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>三至六年级</li>
+        </ul>
+      </div>
+      <div class="tb">
+        <div class="grade">北师大版</div>
+        <p class="pub">北京师范大学出版社</p>
+        <ul>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>48 个单元</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>三至六年级</li>
+        </ul>
+      </div>
+    </div>
+    <p class="tb-note">在设置里选择教材版本即可切换（切换后重启软件生效）；对话时左下角「课小抄」实时显示当前单元词汇和句型。</p>
+  </div>
+</section>
+
+<!-- ===== 下载 ===== -->
+<section class="download" id="download">
+  <div class="container center">
+    <span class="sec-tag">立即下载</span>
+    <h2>下载语伴同学 v1.1.1</h2>
+    <p class="sec-sub">在线验证版，Windows 10 及以上适用。便携版免安装，解压即用；安装版自动创建桌面快捷方式。</p>
+    <div class="dl-grid">
+      <div class="dl-card">
+        <span class="kind">便携版（推荐）</span>
+        <h3>免安装 · 解压即用</h3>
+        <p class="desc">单个 exe 文件，双击直接运行，免安装、免配置，适合快速上手体验。</p>
+        <span class="ver">v1.1.1 在线验证版</span>
+        <span class="size">约 67 MB · 单文件</span>
+        <a class="btn btn-green dl-btn" data-file="portable" href="#" onclick="return false;">下载便携版</a>
+      </div>
+      <div class="dl-card">
+        <span class="kind">安装版</span>
+        <h3>常规安装 · 桌面快捷方式</h3>
+        <p class="desc">标准 Windows 安装向导，自动创建开始菜单和桌面快捷方式，适合固定电脑长期使用。</p>
+        <span class="ver">v1.1.1 在线验证版</span>
+        <span class="size">约 75 MB · 安装程序</span>
+        <a class="btn btn-orange dl-btn" data-file="setup" href="#" onclick="return false;">下载安装版</a>
+      </div>
+    </div>
+    <p class="dl-alt">如果下载按钮无效，请前往 <a href="#" id="rel-link">GitHub Releases 页面</a> 下载对应文件。</p>
+  </div>
+</section>
+
+<!-- ===== 系统要求 ===== -->
+<section class="specs" id="specs">
+  <div class="container center">
+    <span class="sec-tag">系统要求</span>
+    <h2>一台普通 Windows 电脑就能跑</h2>
+    <div class="spec-grid">
+      <div class="spec">
+        <h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="18" x2="12" y2="21"/></svg>操作系统</h4>
+        <p>Windows 10 及以上（Windows 11 完美兼容）。Windows 10 以下版本无法运行。</p>
+      </div>
+      <div class="spec">
+        <h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10v4M10 10v4M14 10v4M18 10v4"/></svg>磁盘与内存</h4>
+        <p>便携版约 <b>67 MB</b> 磁盘空间；内存最低 <b>2 GB</b>，推荐 <b>4 GB</b> 以上。</p>
+      </div>
+      <div class="spec">
+        <h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>网络与设备</h4>
+        <p>必须联网（大模型与语音识别走云端）；需要可用的<b>麦克风</b>；在线语音引擎免装语音包。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="faq" id="faq">
+  <div class="container center">
+    <span class="sec-tag">常见问题</span>
+    <h2>家长最关心的事</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q">学校用的不是人教版，能练吗？<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        <div class="faq-a">可以。软件内置 5 套小学英语教材：人教版PEP、外研社版、译林版、沪教版、北师大版。在设置里选择教材版本并重启软件，即可随学校教材自由切换。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">启动后没有声音？<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        <div class="faq-a">先检查是否安装了英文语音包。建议在设置里切换到「Edge 在线语音」，无需安装语音包，联网即可用。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">麦克风没反应？<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        <div class="faq-a">在 Windows 设置 → 隐私和安全性 → 麦克风中，允许桌面应用访问麦克风；并确认麦克风没有被其他程序占用。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">孩子发音不准，识别错了怎么办？<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        <div class="faq-a">软件自带口语容错，AI 会结合上下文推测孩子想说的话；也可以让孩子说慢一点、大声一点。识别不准时可点底部快捷短语直接发送。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">AI 回复很慢？<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        <div class="faq-a">回复速度取决于大模型服务的响应速度，晚上高峰时段可能偏慢。可开启「流式输出」降低等待感，或切换到其他模型试试。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">孩子的对话会被上传吗？<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        <div class="faq-a">对话内容只发送给大模型和语音识别服务商，用于生成回复和识别。软件本身不收集、不上传任何数据，配置和记录都保存在本地。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">换台电脑还能用吗？<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        <div class="faq-a">软件采用一机一码授权，一套验证码绑定一台电脑，无法在第二台电脑上激活使用。换电脑后需联系卖家处理，卖家可在后台重置卡密状态后在新电脑重新激活。API Key 是跟着账号走的，换电脑后重新填入即可继续使用 AI 服务。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 页脚 ===== -->
+<footer>
+  <div class="container foot-in">
+    <div class="foot-brand">
+      <img src="assets/logo.png" alt="语伴同学图标">
+      <span>语伴同学</span>
+    </div>
+    <div class="foot-note">语伴同学 - 英文课本同步口语陪练。本软件仅供学习交流使用，对话内容由第三方大模型生成，不代表本软件立场。请监督孩子合理使用，控制使用时间，保护视力。</div>
+    <div class="foot-mail">联系作者：<a href="mailto:rickec@gmail.com">rickec@gmail.com</a></div>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+ * 下载链接配置
+ * 部署到 GitHub Pages 后，把下面两个值改成你自己的
+ * 用户名和仓库名，下载按钮即指向 GitHub Releases。
+ * 需要先在仓库的 Releases 页面上传这两个 exe 文件。
+ * ============================================================ */
+var GITHUB_USER = "YOUR_USERNAME";   // TODO: 改成你的 GitHub 用户名
+var GITHUB_REPO = "yuban-tongxue";    // TODO: 改成你的项目仓库名（与你创建的一致）
+
+var FILES = {
+  portable: "语伴同学-在线验证版-v1.1.1-便携版.exe",
+  setup: "语伴同学-在线验证版-v1.1.1-安装版.exe"
+};
+var REL_BASE = "https://github.com/" + GITHUB_USER + "/" + GITHUB_REPO + "/releases";
+
+var DL_LINKS = document.querySelectorAll(".dl-btn");
+for (var i = 0; i < DL_LINKS.length; i++) {
+  (function (a) {
+    var file = a.getAttribute("data-file");
+    var url = REL_BASE + "/download/" + encodeURIComponent(FILES[file]);
+    a.href = url;
+    a.onclick = null;
+    if (GITHUB_USER === "YOUR_USERNAME") {
+      a.removeAttribute("href");
+      a.onclick = function () { alert("部署前请先在 index.html 的脚本中填写你的 GitHub 用户名（GITHUB_USER）和仓库名（GITHUB_REPO）。"); };
+    }
+  })(DL_LINKS[i]);
+}
+document.getElementById("rel-link").href = REL_BASE + "/latest";
+
+/* FAQ 折叠 */
+var qs = document.querySelectorAll(".faq-q");
+for (var j = 0; j < qs.length; j++) {
+  qs[j].addEventListener("click", function () {
+    this.parentElement.classList.toggle("open");
+  });
+}
+</script>
+</body>
+</html>
