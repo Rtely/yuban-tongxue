@@ -116,6 +116,8 @@ h2{font-size:34px;font-weight:900;line-height:1.25;margin:16px 0 10px}
 .dl-card .btn{margin-top:14px;width:100%}
 .dl-alt{margin-top:14px;text-align:center;font-size:13.5px;color:var(--ink-soft)}
 .dl-alt a{color:var(--blue);font-weight:700;border-bottom:1px dashed}
+.dl-mirror{display:block;margin-top:10px;font-size:12.5px;font-weight:600;color:var(--ink-soft);text-decoration:underline}
+.dl-mirror:hover{color:var(--green-dark)}
 /* ===== 系统要求 ===== */
 .specs{background:var(--bg-2);border-top:2px solid var(--line);border-bottom:2px solid var(--line)}
 .spec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:38px}
@@ -200,7 +202,7 @@ footer{background:#3c3c3c;color:#cfcbb8;padding:44px 0 34px}
         <a class="btn btn-green" href="#download">下载 v1.1.1</a>
         <a class="btn btn-ghost" href="#app">查看界面</a>
       </div>
-      <p class="hero-meta">支持 Windows 10 及以上 · 便携版约 67MB · 需联网和麦克风</p>
+      <p class="hero-meta">支持 Windows 10 及以上 · 安装包约 95MB · 需联网和麦克风</p>
     </div>
     <div class="hero-visual">
       <div class="hero-shot">
@@ -388,10 +390,11 @@ footer{background:#3c3c3c;color:#cfcbb8;padding:44px 0 34px}
       <div class="dl-card">
         <span class="kind">便携版（推荐）</span>
         <h3>免安装 · 解压即用</h3>
-        <p class="desc">单个 exe 文件，双击直接运行，免安装、免配置，适合快速上手体验。</p>
+        <p class="desc">下载后解压，双击其中的 exe 直接运行，免安装、免配置，适合快速上手体验。</p>
         <span class="ver">v1.1.1 在线验证版</span>
-        <span class="size">约 67 MB · 单文件</span>
+        <span class="size">约 95 MB · 压缩包</span>
         <a class="btn btn-green dl-btn" data-file="portable" href="#" onclick="return false;">下载便携版</a>
+        <a class="dl-mirror" href="https://wwatw.lanzoub.com/ixYl647n8sfg" target="_blank" rel="noopener">国内备用（蓝奏云）</a>
       </div>
       <div class="dl-card">
         <span class="kind">安装版</span>
@@ -400,6 +403,7 @@ footer{background:#3c3c3c;color:#cfcbb8;padding:44px 0 34px}
         <span class="ver">v1.1.1 在线验证版</span>
         <span class="size">约 75 MB · 安装程序</span>
         <a class="btn btn-orange dl-btn" data-file="setup" href="#" onclick="return false;">下载安装版</a>
+        <a class="dl-mirror" href="https://wwatw.lanzoub.com/iVlXJ47n8m2h" target="_blank" rel="noopener">国内备用（蓝奏云，密码 9r46）</a>
       </div>
     </div>
     <p class="dl-alt">如果下载按钮无效，请前往 <a href="#" id="rel-link">GitHub Releases 页面</a> 下载对应文件。</p>
@@ -418,7 +422,7 @@ footer{background:#3c3c3c;color:#cfcbb8;padding:44px 0 34px}
       </div>
       <div class="spec">
         <h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10v4M10 10v4M14 10v4M18 10v4"/></svg>磁盘与内存</h4>
-        <p>便携版约 <b>67 MB</b> 磁盘空间；内存最低 <b>2 GB</b>，推荐 <b>4 GB</b> 以上。</p>
+        <p>便携版压缩包约 <b>95 MB</b>，解压后占用约 300 MB 磁盘空间；内存最低 <b>2 GB</b>，推荐 <b>4 GB</b> 以上。</p>
       </div>
       <div class="spec">
         <h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>网络与设备</h4>
@@ -485,12 +489,17 @@ footer{background:#3c3c3c;color:#cfcbb8;padding:44px 0 34px}
  * 用户名和仓库名，下载按钮即指向 GitHub Releases。
  * 需要先在仓库的 Releases 页面上传这两个 exe 文件。
  * ============================================================ */
-var GITHUB_USER = "YOUR_USERNAME";   // TODO: 改成你的 GitHub 用户名
-var GITHUB_REPO = "yuban-tongxue";    // TODO: 改成你的项目仓库名（与你创建的一致）
+var GITHUB_USER = "Rtely";
+var GITHUB_REPO = "yuban-tongxue";
+var TAG = "v1.1.1";
 
 var FILES = {
-  portable: "语伴同学-在线验证版-v1.1.1-便携版.exe",
-  setup: "语伴同学-在线验证版-v1.1.1-安装版.exe"
+  portable: "yuban-tongxue-v1.1.1-portable.zip",
+  setup: "yuban-tongxue-v1.1.1-setup.exe"
+};
+var MIRRORS = {
+  portable: "https://wwatw.lanzoub.com/ixYl647n8sfg",
+  setup: "https://wwatw.lanzoub.com/iVlXJ47n8m2h"
 };
 var REL_BASE = "https://github.com/" + GITHUB_USER + "/" + GITHUB_REPO + "/releases";
 
@@ -498,7 +507,7 @@ var DL_LINKS = document.querySelectorAll(".dl-btn");
 for (var i = 0; i < DL_LINKS.length; i++) {
   (function (a) {
     var file = a.getAttribute("data-file");
-    var url = REL_BASE + "/download/" + encodeURIComponent(FILES[file]);
+    var url = REL_BASE + "/download/" + TAG + "/" + encodeURIComponent(FILES[file]);
     a.href = url;
     a.onclick = null;
     if (GITHUB_USER === "YOUR_USERNAME") {
