@@ -190,7 +190,11 @@ footer{background:#3c3c3c;color:#cfcbb8;padding:44px 0 34px}
 <section class="hero" id="hero">
   <div class="container hero-grid">
     <div>
-      <span class="sec-tag">Windows 桌面版 · v1.1.1 在线验证版</span>
+      <!-- ==========================================================
+           版本号修改点（升级时只需改这里）：
+           把下方 v1.1.2 替换成新版本号即可，网页其余位置无需改动。
+           ========================================================== -->
+      <span class="sec-tag">Windows 桌面版 · 当前版本号 v1.1.2</span>
       <h1>让孩子开口说英语，<em>像聊天一样自然</em></h1>
       <p class="lead">语伴同学是一款面向小学生的小学英语口语陪练应用。孩子说完自动停，AI 自动接话——全程免按键，对标教材教学进度练口语。</p>
       <ul class="points">
@@ -201,7 +205,7 @@ footer{background:#3c3c3c;color:#cfcbb8;padding:44px 0 34px}
         <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>中英混合也能聊，每句带翻译</li>
       </ul>
       <div class="hero-btns">
-        <a class="btn btn-green" href="#download">下载 v1.1.1</a>
+        <a class="btn btn-green" href="#download">下载</a>
         <a class="btn btn-ghost" href="#app">查看界面</a>
       </div>
       <p class="hero-meta">支持 Windows 10 及以上 · 安装包约 95MB · 需联网和麦克风</p>
@@ -381,7 +385,7 @@ footer{background:#3c3c3c;color:#cfcbb8;padding:44px 0 34px}
 <section class="download" id="download">
   <div class="container center">
     <span class="sec-tag">立即下载</span>
-    <h2>下载语伴同学 v1.1.1</h2>
+    <h2>下载语伴同学</h2>
     <p class="sec-sub">在线验证版，Windows 10 及以上适用。便携版免安装，解压即用；安装版自动创建桌面快捷方式。</p>
     <div class="dl-grid">
       <div class="dl-card">
@@ -389,22 +393,30 @@ footer{background:#3c3c3c;color:#cfcbb8;padding:44px 0 34px}
         <h3>免安装 · 解压即用</h3>
         <p class="desc">下载后解压，双击其中的 exe 直接运行，免安装、免配置，适合快速上手体验。</p>
         <div class="dl-meta">
-          <span class="ver">v1.1.1 在线验证版</span>
+          <span class="ver">在线验证版</span>
           <span class="size">约 95 MB · 压缩包</span>
         </div>
         <a class="btn btn-green dl-btn" data-file="portable" href="#" onclick="return false;">下载便携版</a>
-        <a class="dl-mirror" href="https://wwatw.lanzoub.com/iHwwQ47tfpvc" target="_blank" rel="noopener">国内备用（蓝奏云）</a>
+        <!-- ==========================================================
+             国内备用下载修改点（蓝奏云换新地址时改这里，便携版）：
+             只改下方 href 链接，文字标注保持「蓝奏云，密码 yuban」。
+             ========================================================== -->
+        <a class="dl-mirror" href="https://wwatw.lanzoub.com/iHD2T4c138fe" target="_blank" rel="noopener">国内备用（蓝奏云，密码 yuban）</a>
       </div>
       <div class="dl-card">
         <span class="kind">安装版</span>
         <h3>常规安装 · 桌面快捷方式</h3>
         <p class="desc">标准 Windows 安装向导，自动创建开始菜单和桌面快捷方式，适合固定电脑长期使用。</p>
         <div class="dl-meta">
-          <span class="ver">v1.1.1 在线验证版</span>
+          <span class="ver">在线验证版</span>
           <span class="size">约 75 MB · 安装程序</span>
         </div>
         <a class="btn btn-orange dl-btn" data-file="setup" href="#" onclick="return false;">下载安装版</a>
-        <a class="dl-mirror" href="https://wwatw.lanzoub.com/itlgi47tfmkd" target="_blank" rel="noopener">国内备用（蓝奏云，密码 yuban）</a>
+        <!-- ==========================================================
+             国内备用下载修改点（蓝奏云换新地址时改这里，安装版）：
+             只改下方 href 链接，文字标注保持「蓝奏云，密码 yuban」。
+             ========================================================== -->
+        <a class="dl-mirror" href="https://wwatw.lanzoub.com/ijS8d4c13ctc" target="_blank" rel="noopener">国内备用（蓝奏云，密码 yuban）</a>
       </div>
     </div>
     <p class="dl-alt">如果下载按钮无效，请前往 <a href="#" id="rel-link">GitHub Releases 页面</a> 下载对应文件。</p>
@@ -492,16 +504,21 @@ footer{background:#3c3c3c;color:#cfcbb8;padding:44px 0 34px}
  * ============================================================ */
 var GITHUB_USER = "Rtely";
 var GITHUB_REPO = "yuban-tongxue";
-var TAG = "v1.1.1";
+
+/* ==========================================================
+   版本号修改点（升级新版本时，除上面 hero 的版本号外，还需同步改这里）：
+   1. TAG：改成新的 GitHub Release 标签（如 "v1.2.0"）
+   2. FILES：改成新上传到 Releases 的文件名（与 Release 附件完全一致）
+   3. 改完先到 GitHub Releases 重新上传新版本文件，再改这里
+   ========================================================== */
+var TAG = "yuban-tongxue";
 
 var FILES = {
-  portable: "yuban-tongxue-v1.1.1-portable.zip",
-  setup: "yuban-tongxue-v1.1.1-setup.exe"
+  portable: "yuban-tongxue-v1.1.2-portable.zip",
+  setup: "yuban-tongxue-v1.1.2-setup.exe"
 };
-var MIRRORS = {
-  portable: "https://wwatw.lanzoub.com/iHwwQ47tfpvc",
-  setup: "https://wwatw.lanzoub.com/itlgi47tfmkd"
-};
+/* 国内备用（蓝奏云）链接统一在 HTML 里维护（搜索「国内备用下载修改点」），
+   不在此配置，避免改错位置不生效。 */
 var REL_BASE = "https://github.com/" + GITHUB_USER + "/" + GITHUB_REPO + "/releases";
 
 var DL_LINKS = document.querySelectorAll(".dl-btn");
